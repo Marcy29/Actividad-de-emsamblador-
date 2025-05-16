@@ -1,0 +1,46 @@
+.MODEL SMALL
+.STACK 100h
+
+.DATA
+    num1   DB 5                   ; Primer número
+    num2   DB 8                   ; Segundo número
+
+    mayor  DB 'El primer numero es MAYOR', 0Dh, 0Ah, '$'
+    menor  DB 'El primer numero es MENOR', 0Dh, 0Ah, '$'
+    igual  DB 'Ambos numeros son IGUALES', 0Dh, 0Ah, '$'
+
+.CODE
+MAIN:
+    MOV AX, @DATA                ; Inicializa el segmento de datos
+    MOV DS, AX
+
+    MOV AL, num1                 ; Carga el primer número en AL
+    MOV BL, num2                 ; Carga el segundo número en BL
+
+    CMP AL, BL                   ; Compara AL con BL
+
+    JA MAYOR_MSG                 ; Salta si AL > BL
+    JB MENOR_MSG                 ; Salta si AL < BL
+    JE IGUAL_MSG                 ; Salta si son iguales
+
+MAYOR_MSG:
+    LEA DX, mayor
+    MOV AH, 09h
+    INT 21h
+    JMP FIN
+
+MENOR_MSG:
+    LEA DX, menor
+    MOV AH, 09h
+    INT 21h
+    JMP FIN
+
+IGUAL_MSG:
+    LEA DX, igual
+    MOV AH, 09h
+    INT 21h
+
+FIN:
+    MOV AH, 4Ch
+    INT 21h
+END MAIN

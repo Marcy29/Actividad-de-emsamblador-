@@ -1,0 +1,30 @@
+.model small
+.stack 100h
+.data
+    var1 db 5     ; Variable con valor 5
+    var2 db 0     ; Variable vacía para mover el valor
+    salto db 13,10,'$' ; Salto de línea para formato
+.code
+main:
+    mov ax, @data
+    mov ds, ax
+
+    ; Mover valor de var1 a var2
+    mov al, var1
+    mov var2, al
+
+    ; Mostrar mensaje de var2
+    mov dl, var2
+    add dl, 30h       ; Convertir número a carácter ASCII
+    mov ah, 02h
+    int 21h
+
+    ; Imprimir salto de línea
+    lea dx, salto
+    mov ah, 09h
+    int 21h
+
+    ; Terminar programa
+    mov ah, 4Ch
+    int 21h
+end main

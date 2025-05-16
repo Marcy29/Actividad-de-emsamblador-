@@ -1,0 +1,43 @@
+.model small
+.stack 100h
+.data
+    num1 db 8
+    num2 db 3
+    resultado db ?
+    salto db 13,10,'$'
+.code
+main:
+    mov ax, @data
+    mov ds, ax
+
+    ; Suma: resultado = num1 + num2
+    mov al, num1
+    add al, num2
+    mov resultado, al
+
+    ; Mostrar resultado de suma
+    mov dl, resultado
+    add dl, 30h       ; Convertir a ASCII
+    mov ah, 02h
+    int 21h
+
+    ; Salto de línea
+    lea dx, salto
+    mov ah, 09h
+    int 21h
+
+    ; Resta: resultado = num1 - num2
+    mov al, num1
+    sub al, num2
+    mov resultado, al
+
+    ; Mostrar resultado de resta
+    mov dl, resultado
+    add dl, 30h
+    mov ah, 02h
+    int 21h
+
+    ; Terminar programa
+    mov ah, 4Ch
+    int 21h
+end main
