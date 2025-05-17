@@ -1,0 +1,32 @@
+.model small
+.stack 100h
+.data
+    mensaje db 'Contador: $'
+    saltoLinea db 13, 10, '$'
+.code
+main:
+    mov ax, @data
+    mov ds, ax
+
+    mov cx, 8         ; Contador inicia en 8
+
+inicio_loop:
+    lea dx, mensaje   ; Mostrar "Contador: "
+    mov ah, 09h
+    int 21h
+
+    mov al, cl        ; Copiar el valor actual a AL
+    add al, '0'       ; Convertir número a carácter ASCII
+    mov dl, al
+    mov ah, 02h
+    int 21h           ; Mostrar el número
+
+    lea dx, saltoLinea
+    mov ah, 09h
+    int 21h           ; Salto de línea
+
+    loop inicio_loop  ; Decrementa CX y repite si no es cero
+
+    mov ah, 4Ch       ; Terminar el programa
+    int 21h
+end main
